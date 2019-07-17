@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <Platforms>x64</Platforms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>${CMAKE_BINARY_DIR}/bin/$(Configuration)</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="libclang" Version="5.0.0"/>
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.0.0-*"/>
+    <PackageReference Include="System.Memory" Version="4.*"/>
+
+    <Compile Include="${CMAKE_CURRENT_SOURCE_DIR}/*.cs"/>
+
+    <Reference Include="ClangSharp">
+      <HintPath>${CMAKE_CURRENT_SOURCE_DIR}/ClangSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ClangSharp.PInvokeGenerator">
+      <HintPath>${CMAKE_CURRENT_SOURCE_DIR}/ClangSharp.PInvokeGenerator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet ${CMAKE_BINARY_DIR}/bin/$(Configuration)/PInvokeGenerator.dll ${CMAKE_SOURCE_DIR}/bullet4unity ${CMAKE_SOURCE_DIR}/bullet3/src >${CMAKE_BINARY_DIR}/bin/$(Configuration)/bullet4unity.cs" />
+  </Target>
+
+</Project>
