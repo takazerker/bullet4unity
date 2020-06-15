@@ -259,6 +259,11 @@ struct btPairTestCache
 	btCollisionObjectArray objects;
 };
 
+struct btCollisionObjectBuffer
+{
+	btCollisionObject objects[1];
+};
+
 EXPORT_STRUCT(btCollisionData)
 
 #endif // _UNITYTYPES_H_

@@ -408,6 +408,30 @@ bool DLLAPI btCollisionObject__checkCollideWith_0(btCollisionObject* self, btCol
 }
 
 //=============================================================================
+// btCollisionObjectBuffer
+//=============================================================================
+
+CLASSFUNC(btCollisionObjectBuffer)
+STATIC btCollisionObjectBuffer* DLLAPI btCollisionObjectBuffer__create_0(int size)
+{
+	btCollisionObject* ptr = new btCollisionObject[size];
+	return (btCollisionObjectBuffer*)ptr;
+}
+
+CLASSFUNC(btCollisionObjectBuffer)
+DESTRUCTOR void DLLAPI btCollisionObjectBuffer__destroy(btCollisionObjectBuffer* self)
+{
+	btCollisionObject* ptr = (btCollisionObject*)self;
+	delete[] ptr;
+}
+
+CLASSFUNC(btCollisionObjectBuffer)
+int DLLAPI btCollisionObjectBuffer__getStride(btCollisionObjectBuffer* self)
+{
+	return sizeof(btCollisionObject);
+}
+
+//=============================================================================
 // btRigidBody
 //=============================================================================
 
