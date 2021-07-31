@@ -29,7 +29,7 @@ template<class T>
 inline T* AlignAddressOf(T* ptr)
 {
 	__int64 addr = (__int64)ptr;
-	__int64 offset = (addr % alignof(T));
+	__int64 offset = (alignof(T) - addr % alignof(T)) % alignof(T);
 	return (T*)((char*)ptr + offset);
 }
 
